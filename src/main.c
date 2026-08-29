@@ -1,42 +1,29 @@
 #include "core/arena.c"
 #include "core/arena.h"
 #include "core/array.h"
+#include "frontend/lexer.c"
+#include "frontend/lexer.h"
+#include "frontend/token.h"
 
-#include <assert.h>
 #include <stdio.h>
 
-int main(int argc, char **argv) {
-  (void) argc;
-  (void) argv;
+int main(void) {
+  const char *source_code = "// sibc lexer verification\n"
+                            "int main(void) {\n"
+                            "    int * _Nonnull p = 0x2A;\n"
+                            "    defer free(p);\n"
+                            "    return 100 + 20;\n"
+                            "}";
 
-  printf("sibc: Initializing runtime primitives...\n");
+  printf("Tokenizing source code...\n\n");
+  Token *tokens = lexer_tokenize(source_code, "test.c");
 
-  // 1. Test Arena Allocator
-  Arena ast_arena = arena_create(1024 * 1024);
-  int *numbers = (int *) arena_alloc(&ast_arena, sizeof(int) * 3);
-  numbers[0] = 10;
-  numbers[1] = 20;
-  numbers[2] = 30;
-
-  assert(numbers[0] + numbers[1] + numbers[2] == 60);
-  printf("[PASS] Arena allocation (used: %zu bytes)\n", ast_arena.offset);
-
-  // 2. Test Dynamic Array (Stretchy Buffer)
-  int *token_stream = NULL;
-  for (int i = 1; i <= 100; i++) {
-    arr_push(token_stream, i * 2);
+  for (size_t i = 0; i < arr_len(tokens); i++) {
+    Token t = tokens[i];
+    printf("[%u:%u] %-15s '%.*s'\n", t.loc.line, t.loc.col, token_kind_name(t.kind), (int) t.length,
+           t.start);
   }
 
-  assert(arr_len(token_stream) == 100);
-  assert(token_stream[0] == 2);
-  assert(token_stream[99] == 200);
-  printf("[PASS] Dynamic array (count: %zu, cap: %zu)\n", arr_len(token_stream),
-         arr_cap(token_stream));
-
-  // Cleanup
-  arr_free(token_stream);
-  arena_destroy(&ast_arena);
-
-  printf("All core tests passed successfully!\n");
+  arr_free(tokens);
   return 0;
 }
