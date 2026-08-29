@@ -36,8 +36,9 @@ Arena arena_create(size_t capacity) {
 
 void *arena_alloc_aligned(Arena *arena, size_t size, size_t alignment) {
   if (alignment == 0 || (alignment & (alignment - 1)) != 0) {
-    fprintf(stderr, "[FATAL] Arena alignment must be a nonzero power of two "
-                     "(got %zu)\n",
+    fprintf(stderr,
+            "[FATAL] Arena alignment must be a nonzero power of two "
+            "(got %zu)\n",
             alignment);
     exit(EXIT_FAILURE);
   }
@@ -72,8 +73,9 @@ ArenaMark arena_mark(const Arena *arena) {
 
 void arena_reset_to(Arena *arena, ArenaMark mark) {
   if (mark.offset > arena->offset) {
-    fprintf(stderr, "[FATAL] Invalid arena mark: %zu exceeds current offset "
-                     "%zu\n",
+    fprintf(stderr,
+            "[FATAL] Invalid arena mark: %zu exceeds current offset "
+            "%zu\n",
             mark.offset, arena->offset);
     exit(EXIT_FAILURE);
   }

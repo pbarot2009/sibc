@@ -1,19 +1,19 @@
-#include <assert.h>
-#include <stdio.h>
-
 #include "core/arena.c"
 #include "core/arena.h"
 #include "core/array.h"
 
+#include <assert.h>
+#include <stdio.h>
+
 int main(int argc, char **argv) {
-  (void)argc;
-  (void)argv;
+  (void) argc;
+  (void) argv;
 
   printf("sibc: Initializing runtime primitives...\n");
 
   // 1. Test Arena Allocator
   Arena ast_arena = arena_create(1024 * 1024);
-  int *numbers = (int *)arena_alloc(&ast_arena, sizeof(int) * 3);
+  int *numbers = (int *) arena_alloc(&ast_arena, sizeof(int) * 3);
   numbers[0] = 10;
   numbers[1] = 20;
   numbers[2] = 30;
