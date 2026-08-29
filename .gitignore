@@ -1,0 +1,32 @@
+# Build outputs & compiled binaries
+bin/
+build
+*.o
+*.a
+*.so
+*.out
+*.exe
+
+# Transpiled test artifacts & temporary files
+out/
+tmp/
+*.tmp
+*.log
+
+# Debugging & core dumps
+core
+vgcore.*
+*.dSYM/
+*.gdb_history
+
+# Editor and environment caches
+.cache/
+*.swp
+*.swo
+*~
+.helix/
+.vscode/
+.idea/
+.clangd/
+.clang-format.bak
+

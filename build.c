@@ -44,13 +44,13 @@ int main(int argc, char **argv) {
   if (strcmp(mode, "release") == 0) {
     // Optimized release binary
     snprintf(cmd, sizeof(cmd),
-             "%s -std=c11 -O3 -flto -DNDEBUG -Wall -Wextra -Isrc %s -o %s", CC,
+             "%s -std=c17 -O3 -flto -DNDEBUG -Wall -Wextra -Isrc %s -o %s", CC,
              SRC_MAIN, TARGET);
   } else {
     // Fast debug build with debug symbols and runtime safety
     snprintf(
         cmd, sizeof(cmd),
-        "%s -std=c11 -O0 -g -Wall -Wextra -Wno-unused-parameter -Isrc %s -o %s",
+        "%s -std=c17 -O0 -g -Wall -Wextra -Wno-unused-parameter -Isrc %s -o %s",
         CC, SRC_MAIN, TARGET);
   }
 
