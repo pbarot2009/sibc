@@ -3,7 +3,7 @@
 #include "cmd/ui.c"
 #include "cmd/ui.h"
 #include "core/arena.c"
-#include "core/arena.h"
+// #include "core/arena.h"
 #include "core/array.h"
 #include "frontend/lexer.c"
 #include "frontend/lexer.h"
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 
   if (opt.flag_tokenize) {
     printf("\n" UI_DIM "  LINE:COL   TOKEN             LITERAL" UI_RESET "\n");
-    printf(UI_DIM "  ──────────────────────────────────────────" UI_RESET "\n");
+    printf(UI_DIM "  ------------------------------------------" UI_RESET "\n");
     for (size_t i = 0; i < arr_len(tokens); i++) {
       Token t = tokens[i];
       printf("  " UI_DIM "%3u:%-3u" UI_RESET "    " UI_CYAN "%-16s" UI_RESET " " UI_YELLOW

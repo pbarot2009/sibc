@@ -2,7 +2,7 @@
 #include "ui.h"
 
 #include <stdio.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string.h>
 
 void cli_print_version(void) {
