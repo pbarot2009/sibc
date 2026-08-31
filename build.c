@@ -66,11 +66,20 @@ int main(int argc, char **argv) {
   run_cmd(cmd);
   printf("%s[SUCCESS]%s Built target '%s' (%s mode)\n", COLOR_GREEN, COLOR_RESET, TARGET, mode);
 
-  // Execute directly with ./build.sh run <args>
+  // Execute directly with all args forwarded
   if (strcmp(mode, "run") == 0) {
-    char run_cmd_buf[512];
-    const char *pass_arg = (argc > 2) ? argv[2] : "";
-    snprintf(run_cmd_buf, sizeof(run_cmd_buf), "./%s %s", TARGET, pass_arg);
+    char run_cmd_buf[1024];
+    int offset = snprintf(run_cmd_buf, sizeof(run_cmd_buf), "./%s", TARGET);
+
+    for (int i = 2; i < argc; i++) {
+      offset += snprintf(run_cmd_buf + offset, sizeof(run_cmd_buf) - offset, " %s", argv[i]);
+      if ((size_t) offset >= sizeof(run_cmd_buf)) {
+        fprintf(stderr, "%s[ERROR]%s Command arguments exceed buffer limit\n", COLOR_RED,
+                COLOR_RESET);
+        exit(EXIT_FAILURE);
+      }
+    }
+
     run_cmd(run_cmd_buf);
   }
 
